@@ -5,7 +5,7 @@
   "main": "src/index.js",
   "scripts": {
     "dbcreate": "NODE_ENV=dev sequelize db:create && NODE_ENV=test sequelize db:create",
-    "dbmigrate": "NODE_ENV=dev sequelize db:migrate && NODE_ENV=test sequelize db:migrate",
+    "dbmigrate": "NODE_ENV=dev sequelize db:migrate:undo:all && NODE_ENV=test sequelize db:migrate:undo:all && NODE_ENV=dev sequelize db:migrate && NODE_ENV=test sequelize db:migrate",
     "start": "nodemon ./src/index.js",
     "test": "jest"
   },
