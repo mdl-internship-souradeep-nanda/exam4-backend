@@ -24,10 +24,14 @@ const route = {
   path: '/postAnswers',
   method: 'POST',
   handler: (req, res) => {
+    const { username } = req.payload[0];
     postAnswers(req.payload)
-      .then(() => getScore({ username: req.payload[0].username }))
+      .then(() => getScore({ username }))
       .then(arr => arr.filter(elem => elem).length)
-      .then(res);
+      .then((score) => {
+        models.users.upsert({ username, score });
+        res(score);
+      });
   },
 };
 
