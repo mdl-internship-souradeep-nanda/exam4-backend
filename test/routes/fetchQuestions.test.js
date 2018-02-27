@@ -3,6 +3,7 @@ const {
   isDbPopulated,
   populateDb,
   fetchQuestions,
+  fetchFromExternal,
 } = require('../../src/routes/fetchQuestions');
 
 describe('The fetchQuestions route should', () => {
@@ -14,7 +15,9 @@ describe('The fetchQuestions route should', () => {
       });
   });
   it('fetch questions from external server, save and return it', async () => {
-    await populateDb()
+    await fetchFromExternal()
+      .then(populateDb)
+      .then(fetchQuestions)
       .then((questions) => {
         expect(questions.length).toBeGreaterThan(0);
       });
