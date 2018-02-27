@@ -4,13 +4,13 @@ const { postAnswers, getScore } = require('../../src/routes/postAnswers');
 
 describe('The postAnswers route should', () => {
   it('reject if username field is invalid', async () => {
-    const answers = [{
+    const obj = {
       username: 'INVALID_USERNAME',
       questionId: 0,
       answer: 'answer',
-    }];
+    };
 
-    await postAnswers(answers)
+    await postAnswers(obj)
       .then((isSuccess) => {
         expect(isSuccess).toBeFalsy();
       });

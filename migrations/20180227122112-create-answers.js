@@ -8,10 +8,11 @@ module.exports = {
     },
     username: {
       type: Sequelize.STRING,
-      unique: true,
+      unique: 'compositeIndex',
     },
     questionid: {
       type: Sequelize.INTEGER,
+      unique: 'compositeIndex',
     },
     answer: {
       type: Sequelize.STRING,
@@ -24,6 +25,8 @@ module.exports = {
       allowNull: false,
       type: Sequelize.DATE,
     },
-  }),
+  }).then(() =>
+    queryInterface.sequelize
+      .query('ALTER TABLE answers ADD UNIQUE (username, questionid)')),
   down: (queryInterface, Sequelize) => queryInterface.dropTable('answers'),
 };
