@@ -19,7 +19,8 @@ const route = {
   path: '/login',
   method: 'POST',
   handler: (req, res) => {
-    const { username } = req.headers;
+    const obj = typeof req.payload === 'string' ? JSON.parse(req.payload) : req.payload;
+    const { username } = obj;
     const userObj = { username };
     isUserInDb(userObj)
       .then((userIsInDb) => {
@@ -31,16 +32,16 @@ const route = {
       })
       .then(res);
   },
-  config: {
-    validate: {
-      headers: {
-        username: joi.string().required(),
-      },
-      options: {
-        allowUnknown: true,
-      },
-    },
-  },
+  // config: {
+  //   validate: {
+  //     headers: {
+  //       username: joi.string().required(),
+  //     },
+  //     options: {
+  //       allowUnknown: true,
+  //     },
+  //   },
+  // },
 };
 
 module.exports = {

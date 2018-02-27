@@ -10,7 +10,9 @@ const route = {
   path: '/getSavedState',
   method: 'GET',
   handler: (req, res) => {
-    getSavedState({ username: req.headers.username })
+    const obj = typeof req.payload === 'string' ? JSON.parse(req.payload) : req.payload;
+    const { username } = obj;
+    getSavedState({ username })
       .then(res);
   },
 };

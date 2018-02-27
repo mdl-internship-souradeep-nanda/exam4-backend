@@ -24,7 +24,8 @@ const route = {
   path: '/postAnswers',
   method: 'POST',
   handler: (req, res) => {
-    const { username } = req.payload[0];
+    const obj = typeof req.payload === 'string' ? JSON.parse(req.payload) : req.payload;
+    const { username } = obj[0];
     postAnswers(req.payload)
       .then(() => getScore({ username }))
       .then(arr => arr.filter(elem => elem).length)
