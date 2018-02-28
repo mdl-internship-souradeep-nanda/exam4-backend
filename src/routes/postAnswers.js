@@ -30,8 +30,14 @@ const route = {
       .then(() => getScore({ username }))
       .then(arr => arr.filter(elem => elem).length)
       .then((score) => {
-        models.users.upsert({ username, score });
-        res(score);
+        models.users.findOne({
+          where: {
+            username,
+          },
+        }).then((user) => {
+          models.users.upsert({ id: user.id, username, score });
+          res(score);
+        });
       });
   },
 };
